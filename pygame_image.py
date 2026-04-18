@@ -20,15 +20,29 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: return
         
-        key_list = py.key.get_pressed()
-        if key_list[pg.K_UP]:
-            kk_rct.move_ip(0,-1)
-        if key_list[pg.K_DOWN]:
-            kk_rct.move_ip(0,+1)
-        if key_list[pg.K_LEFT]:
-            kk_rct.move_ip(-1,0)
+        key_list = pg.key.get_pressed()
+        kkx = -2
         if key_list[pg.K_RIGHT]:
-            kk_rct.move_ip(+1,0)
+            kkx = 2
+        elif key_list[pg.K_LEFT]:
+            kkx = -2
+        
+        kky = 0
+        if key_list[pg.K_UP]:
+            kky = -2
+        if key_list[pg.K_DOWN]:
+            kky = 2
+        
+        if kk_rct.left + kkx < 0:
+            kkx = 0
+        if kk_rct.right + kkx > 800:
+            kkx = 0
+        if kk_rct.top + kky < 0:
+            kky = 0
+        if kk_rct.bottom + kky > 600:
+            kky = 0
+        kk_rct.move_ip(kkx,kky)
+
         x = tmr % 3200
         screen.blit(bg_img, [-x, 0]) #練習2,3
         screen.blit(bg_img2, [-x + 1600, 0])#練習7
